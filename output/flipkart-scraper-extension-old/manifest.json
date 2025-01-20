@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Flipkart Scraper",
+  "version": "1.0",
+  "description": "Scrape product links from Flipkart based on a search term.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://www.flipkart.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
