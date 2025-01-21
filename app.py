@@ -4,12 +4,16 @@ import urllib.parse as urlparse
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import chromedriver_autoinstaller  # Automatically installs the correct ChromeDriver version
 import os  # Added for environment variable handling
 
 app = Flask(__name__)
+
+CHROME_PATH = "/usr/bin/google-chrome"  # Adjust if Chrome is installed elsewhere
+chromedriver_path = "/usr/local/bin/chromedriver"  # Update as per your environment
 
 def scrape_flipkart(search_term):
     # Set up Chrome options for headless mode and resource optimization
@@ -19,12 +23,16 @@ def scrape_flipkart(search_term):
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
+    options.binary_location = CHROME_PATH
+
+    service = Service(chromedriver_path)  # Use explicit path if needed
+    driver = webdriver.Chrome(service=service, options=options)
 
     # Automatically install the correct ChromeDriver version
-    chromedriver_autoinstaller.install()
+    # chromedriver_autoinstaller.install()
 
     # Initialize the Chrome driver
-    driver = webdriver.Chrome(options=options)
+    # driver = webdriver.Chrome(options=options)
 
     # Prepare the search URLs
     search = search_term.replace(" ", "+")
